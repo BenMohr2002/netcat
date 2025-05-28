@@ -6,6 +6,11 @@ def server(port):
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s_sock:
         s_sock.bind(('0.0.0.0',port))
         s_sock.listen()
+
+        hostname = socket.gethostname()
+        local_ip = socket.gethostbyname(hostname)
+        print(f"Server läuft auf IP {local_ip}, Port {port}")
+
         while True:
             c_sock, c_address = s_sock.accept()
             t = threading.Thread(target=serveClient,args=(c_sock,c_address))
